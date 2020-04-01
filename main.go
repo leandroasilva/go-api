@@ -1,19 +1,15 @@
 package main
 
 import (
-	"net/http"
+	"go-api/router"
 
-	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
-	e := echo.New()
+	e := router.App
 
-	e.GET("/", home)
+	e.Use(middleware.Logger())
 
-	e.Start(":3333")
-}
-
-func home(c echo.Context) error {
-	return c.String(http.StatusOK, "Hello World!!")
+	e.Logger.Fatal(e.Start(":3333"))
 }
